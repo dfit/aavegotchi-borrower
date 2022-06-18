@@ -9,6 +9,10 @@ module.exports = {
       data = data.replace(/nbGotchiWanted: .*,/g, `nbGotchiWanted: ${nbGotchiNeeded},`);
       fs.writeFile(configurationFile, data, function(error) {
         if(err) console.log(error)
+        if(!err) {
+          console.log("My work is done good-bye.")
+          process.exit(0)
+        }
       });
     });
   }

@@ -8,7 +8,7 @@ module.exports = {
   aavegotchiContract: null,
   borrowParameters : {
     shouldHaveChannel: false,
-    nbGotchiWanted: 1,
+    nbGotchiWanted: 0,
     time: 1, //hours
     ghstUpfrontCost: "0.1",
     borrower: 0,

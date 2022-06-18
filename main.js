@@ -1,10 +1,7 @@
 require('console-stamp')(console, 'yyyy-mm-dd HH:MM:ss.l');
 const configuration = require('./configuration');
 const diamondcontract = require('./data/diamondcontract');
-const realmContract = require('./data/realmcontract');
 const walletUtil = require('./src/walletUtil');
-const ghstContract = require('./data/ghstcontract');
-const borrowManager = require('./src/borrowManager');
 const naiveAlgo = require('./src/naiveAlgo');
 
 const TIME_BETWEEN_ITERATION = 7000;
