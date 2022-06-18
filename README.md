@@ -1,4 +1,4 @@
-## Aavegotchi automatizer
+## Aavegotchi auto borrower
 
 It is for me a good exercise to get more familiar with web3 dev environment and mechanics.
 
