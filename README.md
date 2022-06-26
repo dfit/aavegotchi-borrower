@@ -28,6 +28,7 @@ Routine is run based on a 7 sec period.
 
 ## Prerequisites
 
+* Already agreed ghst spending for the wallet used (go to the lending page of any gotchi directly on the aavegotchi website and see if you can borrow directly or if it tell you to agree ghst spending first)
 * [Alchemy](https://dashboard.alchemyapi.io/) account (free for this usage)
 * (pm2 if wanted)
 

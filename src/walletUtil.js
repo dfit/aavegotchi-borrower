@@ -1,5 +1,5 @@
 const configuration = require('../configuration');
-const MAX_GWEI = "80";
+const MAX_GWEI = configuration.maxGwei;
 module.exports = {
   getWalletAddress() {
     let account = configuration.web3.eth.accounts.privateKeyToAccount(configuration.privateKey);
