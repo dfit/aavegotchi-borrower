@@ -31,7 +31,7 @@ module.exports = {
       }
     }`
 
-    const listings = (await axios.post("https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic", { query: query })).data.data.gotchiLendings.sort((a,b) => b.splitBorrower - a.splitBorrower)
+    const listings = (await axios.post("https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic", { query: query })).data.data?.gotchiLendings.sort((a,b) => b.splitBorrower - a.splitBorrower)
     if(configuration.borrowParameters.shouldHaveChannel) {
       const gotchisWithChannelReady = await this.returnGotchisWithChannelAvailable(listings.map(listing => listing.gotchi.id))
       return listings.filter(listing => gotchisWithChannelReady.indexOf(listing.gotchi.id) !== -1)
@@ -43,7 +43,7 @@ module.exports = {
     const gotchisInfos = await axios.post("https://api.thegraph.com/subgraphs/name/froid1911/aavegotchi-gotchiverse", { query: query })
     const elibleGotchis = []
     const now = new Date().getTime()
-    for(const gotchi of gotchisInfos.data.data.gotchis) {
+    for(const gotchi of gotchisInfos.data.data?.gotchis) {
       const lastChannelingDate = new Date(gotchi.lastChanneledAlchemica * 1000)
       let nextChannelingDate = new Date(lastChannelingDate.getTime())
       nextChannelingDate.setDate(nextChannelingDate.getDate() + 1)
