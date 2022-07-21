@@ -3,16 +3,17 @@ const providerHttp = process.argv[2]
 let web3 = new Web3(providerHttp);
 module.exports = {
   web3: web3,
+  activated: false,
   walletAddress: null,
   privateKey: "",
   aavegotchiContract: null,
-  maxGwei: 80,
+  maxGwei: 60,
   borrowParameters : {
-    shouldHaveChannel: false,
-    nbGotchiWanted: 0,
-    time: 1, //hours
-    ghstUpfrontCost: "0.1",
-    borrower: 0,
-    kinship: 0
+    shouldHaveChannel: true,
+    nbGotchiWanted: 1,
+    time: 12,
+    ghstUpfrontCost: "0.2",
+    borrower: 60,
+    kinship: 300
   }
 }

@@ -1,6 +1,7 @@
 const axios = require('axios');
 const configuration = require('../configuration');
 const walletUtil = require('./walletUtil');
+const { logInfo } = require('./discord/discordBotManager');
 
 module.exports = {
   async getAvailableGotchis() {
@@ -32,6 +33,7 @@ module.exports = {
     }`
 
     const listings = (await axios.post("https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic", { query: query })).data.data?.gotchiLendings.sort((a,b) => b.splitBorrower - a.splitBorrower)
+    if(listings === null || listings === undefined) return []
     if(configuration.borrowParameters.shouldHaveChannel) {
       const gotchisWithChannelReady = await this.returnGotchisWithChannelAvailable(listings.map(listing => listing.gotchi.id))
       return listings.filter(listing => gotchisWithChannelReady.indexOf(listing.gotchi.id) !== -1)
@@ -56,12 +58,12 @@ module.exports = {
     return elibleGotchis
   },
   borrowCallback(listingId) {
-    console.log(`Borrow of listing id : ${listingId} started.`)
+    logInfo(`@everyone Borrow of listing id : ${listingId} started.`)
     configuration.borrowParameters.nbGotchiWanted = configuration.borrowParameters.nbGotchiWanted - 1
   },
   async borrowGotchi(listing) {
     if(configuration.borrowParameters.nbGotchiWanted !== 0) {
-      console.log(`Trying to borrow ${listing.id}.`)
+      logInfo(`@everyone Trying to borrow ${listing.id}.`)
       const transaction = configuration.aavegotchiContract.methods.agreeGotchiLending(listing.id, listing.gotchi.id,
         listing.upfrontCost, listing.period, [listing.splitOwner, listing.splitBorrower, listing.splitOther])
       await walletUtil.sendWithPrivateKey(transaction, this.borrowCallback, listing.id );

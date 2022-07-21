@@ -17,19 +17,23 @@ module.exports = {
     maxPriorityFeePerGas: estimateGas < configuration.web3.utils.toWei(MAX_GWEI, "Gwei") ? estimateGas : configuration.web3.utils.toWei(MAX_GWEI, "Gwei"),
     type: 0x2
   };
-  const signed  = await configuration.web3.eth.accounts.signTransaction(options, configuration.privateKey);
-  configuration.web3.eth.sendSignedTransaction(signed.rawTransaction)
-  .on('transactionHash',async (hash) => {
-    console.log(`txHash: ${JSON.stringify(hash)}`)
-    if (callback != null && parameter != null) {
-      await callback(parameter);
-    }
-  })
-  .on('receipt',(receipt) => {
-    console.log(`receipt: ${JSON.stringify(receipt)}`)
-  })
-  .on('error', (error => {
-    console.error(`error: ${JSON.stringify(error)}`)
-  }));
+  try {
+    const signed  = await configuration.web3.eth.accounts.signTransaction(options, configuration.privateKey);
+    configuration.web3.eth.sendSignedTransaction(signed.rawTransaction)
+    .on('transactionHash',async (hash) => {
+      console.log(`txHash: ${JSON.stringify(hash)}`)
+      if (callback != null && parameter != null) {
+        await callback(parameter);
+      }
+    })
+    .on('receipt',(receipt) => {
+      console.log(`receipt: ${JSON.stringify(receipt)}`)
+    })
+    .on('error', (error => {
+      console.error(`error: ${JSON.stringify(error)}`)
+    }));
+  } catch (e) {
+    console.error(e)
+  }
 }
 }
