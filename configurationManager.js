@@ -29,9 +29,9 @@ module.exports = {
       data = data.toString();
       data = data.replace(/shouldHaveChannel: .*,/g, `shouldHaveChannel: ${shouldHaveChannel},`);
       data = data.replace(/time: .*,/g, `time: ${time},`);
-      data = data.replace(/ghstUpfrontCost: .*,/g, `ghstUpfrontCost: ${ghstUpfrontCost},`);
+      data = data.replace(/ghstUpfrontCost: ".*",/g, `ghstUpfrontCost: "${ghstUpfrontCost}",`);
       data = data.replace(/borrower: .*,/g, `borrower: ${borrower},`);
-      data = data.replace(/kinship: .*,/g, `kinship: ${kinship},`);
+      data = data.replace(/kinship: .*/g, `kinship: ${kinship}`);
       fs.writeFile(configurationFile, data, function(error) {
         if(err) console.log(error)
       });

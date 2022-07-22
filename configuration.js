@@ -12,8 +12,8 @@ module.exports = {
     shouldHaveChannel: true,
     nbGotchiWanted: 1,
     time: 12,
-    ghstUpfrontCost: "0.2",
-    borrower: 60,
+    ghstUpfrontCost: "0.4",
+    borrower: 70,
     kinship: 300
   }
 }
