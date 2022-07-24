@@ -7,7 +7,7 @@ module.exports = {
   walletAddress: null,
   privateKey: "",
   aavegotchiContract: null,
-  maxGwei: 60,
+  maxGwei: "60",
   borrowParameters : {
     shouldHaveChannel: true,
     nbGotchiWanted: 1,
