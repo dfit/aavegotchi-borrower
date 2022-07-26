@@ -74,7 +74,7 @@ module.exports = {
       const kinship = interaction.fields.getTextInputValue('kinship');
       const lendingDuration = interaction.fields.getTextInputValue('lendingDuration');
       const shouldHaveChanneling = interaction.fields.getTextInputValue('shouldHaveChanneling');
-      configurationManager.setBorrowingParameters(shouldHaveChanneling === "true", lendingDuration, ghstUpfrontCost, borrowerShare, kinship)
+      configurationManager.setBorrowingParameters(shouldHaveChanneling !== "false" , lendingDuration, ghstUpfrontCost, borrowerShare, kinship)
       return interaction.reply(`Gotchi lending parameters updated with :\n- ghstUpfrontCost: ${ghstUpfrontCost} GHST\n- borrowerShare: ${borrowerShare}%\n- kinship: ${kinship}\n- time: ${lendingDuration} hour(s)\n- shouldHaveChannel: ${shouldHaveChanneling}`);
     }
   }
