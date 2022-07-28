@@ -66,7 +66,12 @@ module.exports = {
       logInfo(`@everyone Trying to borrow ${listing.id}.`)
       const transaction = configuration.aavegotchiContract.methods.agreeGotchiLending(listing.id, listing.gotchi.id,
         listing.upfrontCost, listing.period, [listing.splitOwner, listing.splitBorrower, listing.splitOther])
-      await walletUtil.sendWithPrivateKey(transaction, this.borrowCallback, listing.id );
+      try {
+        await walletUtil.sendWithPrivateKey(transaction, this.borrowCallback, listing.id);
+      } catch (e) {
+        console.error(e)
+        process.exit(0)
+      }
     }
   }
 }
