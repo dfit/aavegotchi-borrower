@@ -70,7 +70,6 @@ module.exports = {
         await walletUtil.sendWithPrivateKey(transaction, this.borrowCallback, listing.id);
       } catch (e) {
         console.error(e)
-        process.exit(0)
       }
     }
   }
