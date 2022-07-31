@@ -11,9 +11,20 @@ module.exports = {
       data = data.replace(/nbGotchiWanted: .*,/g, `nbGotchiWanted: ${nbGotchiNeeded},`);
       fs.writeFile(configurationFile, data, function(error) {
         if(err) console.log(error)
-        if(!err) {
-          console.log("My work is done good-bye.")
-        }
+      });
+    });
+  },
+  setHourAndChanneling(hours, channeling) {
+    const configurationFile = './configuration.js';
+    configuration.borrowParameters.time = hours
+    configuration.borrowParameters.shouldHaveChannel = channeling
+    fs.readFile(configurationFile, function(err, data) {
+      if(err) throw err;
+      data = data.toString();
+      data = data.replace(/time: .*,/g, `time: ${hours},`);
+      data = data.replace(/shouldHaveChannel: .*,/g, `shouldHaveChannel: ${channeling},`);
+      fs.writeFile(configurationFile, data, function(error) {
+        if(err) console.log(error)
       });
     });
   },

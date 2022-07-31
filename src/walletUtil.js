@@ -6,7 +6,7 @@ module.exports = {
     console.log(`Public address : ${account.address}`)
     return account.address;
   },
-  async sendWithPrivateKey(transaction, callback, parameter) {
+  async sendWithPrivateKey(transaction, callbackSuccess, callbackFailed, parameter) {
     const account = configuration.web3.eth.accounts.privateKeyToAccount(configuration.privateKey).address;
     const estimateGas = await configuration.web3.eth.getGasPrice();
     const options = {
@@ -17,25 +17,22 @@ module.exports = {
       maxPriorityFeePerGas: estimateGas < configuration.web3.utils.toWei(MAX_GWEI, "Gwei") ? estimateGas : configuration.web3.utils.toWei(MAX_GWEI, "Gwei"),
       type: 0x2
     };
-    try {
-      const signed  = await configuration.web3.eth.accounts.signTransaction(options, configuration.privateKey);
-      configuration.web3.eth.sendSignedTransaction(signed.rawTransaction)
-      .on('transactionHash',async (hash) => {
-        console.log(`txHash: ${JSON.stringify(hash)}`)
-        if (callback != null && parameter != null) {
-          await callback(parameter);
-        }
-      })
-      .on('receipt',(receipt) => {
-        console.log(`receipt: ${JSON.stringify(receipt)}`)
-      })
-      .on('error', (error => {
-        console.error(`error: ${JSON.stringify(error)}`)
-        process.exit(0)
-      }));
-    } catch (e) {
-      console.error(e)
-      process.exit(0)
-    }
+    const signed  = await configuration.web3.eth.accounts.signTransaction(options, configuration.privateKey);
+    configuration.web3.eth.sendSignedTransaction(signed.rawTransaction)
+    .on('transactionHash',async (hash) => {
+      console.log(`txHash: ${JSON.stringify(hash)}`)
+      if (callbackSuccess != null && parameter != null) {
+        await callbackSuccess(parameter);
+      }
+    })
+    .on('receipt',(receipt) => {
+      console.log(`receipt: ${JSON.stringify(receipt)}`)
+    })
+    .on('error', (async error => {
+      console.error(`error: ${JSON.stringify(error)}`)
+      if (callbackFailed != null && parameter != null) {
+        await callbackFailed(parameter);
+      }
+    }));
   }
 }

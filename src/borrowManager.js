@@ -57,9 +57,13 @@ module.exports = {
     }
     return elibleGotchis
   },
-  borrowCallback(listingId) {
+  borrowCallbackSuccess(listingId) {
     logInfo(`@everyone Borrow of listing id : ${listingId} started.`)
     configuration.borrowParameters.nbGotchiWanted = configuration.borrowParameters.nbGotchiWanted - 1
+  },
+  borrowCallbackFailed(listingId) {
+    logInfo(`@everyone Borrow of listing id : ${listingId} failed.`)
+    configuration.borrowParameters.nbGotchiWanted = configuration.borrowParameters.nbGotchiWanted + 1
   },
   async borrowGotchi(listing) {
     if(configuration.borrowParameters.nbGotchiWanted !== 0) {
@@ -67,7 +71,7 @@ module.exports = {
       const transaction = configuration.aavegotchiContract.methods.agreeGotchiLending(listing.id, listing.gotchi.id,
         listing.upfrontCost, listing.period, [listing.splitOwner, listing.splitBorrower, listing.splitOther])
       try {
-        await walletUtil.sendWithPrivateKey(transaction, this.borrowCallback, listing.id);
+        await walletUtil.sendWithPrivateKey(transaction, this.borrowCallbackSuccess, this.borrowCallbackFailed, listing.id);
       } catch (e) {
         console.error(e)
       }
