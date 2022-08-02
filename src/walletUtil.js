@@ -11,7 +11,7 @@ module.exports = {
     const estimateGas = await configuration.web3.eth.getGasPrice();
     const maxPriorityFeePerGas = configuration.web3.utils.toWei((10 + Number(configuration.web3.utils.fromWei(estimateGas,"Gwei"))) +"", "Gwei")
     const options = {
-      chainId: "137",
+      chainId: 0x89,
       to: transaction._parent._address,
       data: transaction.encodeABI(),
       gas: await transaction.estimateGas({from: account}),
